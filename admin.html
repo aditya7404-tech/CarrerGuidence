@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Career Guidance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+
+    <h2>Admin Panel</h2>
+
+    <form id="addCollegeForm">
+      <h3>Add New College</h3>
+      <label>Name:</label>
+      <input id="name" required />
+      <label>Location:</label>
+      <input id="location" required />
+      <label>Fees:</label>
+      <input id="fees" type="number" required />
+      <label>Eligibility:</label>
+      <input id="eligibility" required />
+      <button type="submit" class="btn">Add College</button>
+    </form>
+
+    <h3>Existing Colleges</h3>
+    <div id="collegeList"></div>
+        <button onclick="history.back()" class="btn">⬅ Go Back</button>
+
+  </main>
+
+  <!-- ✅ Firebase CDN (normal, no modules) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+ <script src="scrip.js"></script>
+</body>
+</html>
