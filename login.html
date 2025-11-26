@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Career Guidance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    
+
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label>Email</label>
+      <input id="email" type="email" required />
+      <label>Password</label>
+      <input id="password" type="password" required />
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <p>New user? <a href="signup.html">Sign Up</a></p>
+     <button onclick="history.back()" class="btn">⬅ Go Back</button>
+  </main>
+
+  <!-- ✅ Firebase CDN scripts (no modules) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <script>
+    // ✅ Initialize auth and db (Firebase already initialized in firebase-config.js)
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        alert("Login successful ✅");
+        location.href = "college-list.html";
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+  </script>
+</body>
+</html>

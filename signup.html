@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign Up - Career Guidance</title>
+
+  <!-- Font + CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <nav class="nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="login.html">Login</a>
+    <a href="college-list.html">Colleges</a>
+  </nav>
+
+  <main class="container">
+    <h2>Create Account</h2>
+    <form id="signupForm">
+      <label>Full Name</label>
+      <input id="name" placeholder="Enter your name" required />
+
+      <label>Email</label>
+      <input id="email" type="email" placeholder="Enter your email" required />
+
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Enter password" required />
+
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </main>
+
+  <!-- Fixed Go Back Button -->
+  <button onclick="history.back()" class="back-btn">⬅ Go Back</button>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <script>
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        // Create user in Firebase Auth
+        const userCred = await auth.createUserWithEmailAndPassword(email, password);
+        const uid = userCred.user.uid;
+
+        // Save user info in Firestore
+        await db.collection('users').doc(uid).set({
+          name,
+          email,
+          createdAt: new Date().toISOString()
+        });
+
+        alert("✅ Sign-up successful! Redirecting to college list...");
+        location.href = 'college-list.html';
+      } catch (err) {
+        alert("❌ " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
